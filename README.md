@@ -1,5 +1,7 @@
-[Curso de Webservices REST com JAX-RS e Jersey](https://www.alura.com.br/curso-online-webservices-rest-com-jaxrs-e-jersey)
-Material no [Google Drive](https://drive.google.com/drive/folders/0B64IZUa8-nkHd3ladHBPLXBXU2c)
+# Curso de Webservices REST com JAX-RS e Jersey
+
+- Curso do [Alura](https://www.alura.com.br/curso-online-webservices-rest-com-jaxrs-e-jersey)
+- Material no [Google Drive](https://drive.google.com/drive/folders/0B64IZUa8-nkHd3ladHBPLXBXU2c)
 
 ## Conteúdo Detalhado
 
