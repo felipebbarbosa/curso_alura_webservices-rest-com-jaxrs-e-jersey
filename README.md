@@ -11,7 +11,7 @@
 - Addressability
 - Representação x Recurso
 - URIs e método GET
-- Criando um @Resource
+- Criando um @ Resource
 - Produzindo application/xml
 - Trazendo a representação de um carrinho
 - Usando o Grizzly
@@ -19,12 +19,12 @@
 
 ### 2. Testes endtoend com JAXRS e Grizzly
 - Criando um teste endtoend
-- "@Before" e "@After" para servidores
+- @ Before e @ After para servidores
 - Refatorando nosso código
 
 ### 3. Trabalhando com parâmetros
-- Lendo parâmetros do Path com @PathParam
-- Lendo parâmetros da Query com @QueryParam
+- Lendo parâmetros do Path com @ PathParam
+- Lendo parâmetros da Query com @ QueryParam
 
 ### 4.Gerando Json com Gson
 - Produzindo Json
