@@ -13,8 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.thoughtworks.xstream.XStream;
-
 import br.com.alura.loja.dao.CarrinhoDAO;
 import br.com.alura.loja.modelo.Carrinho;
 import br.com.alura.loja.modelo.Produto;
@@ -26,15 +24,13 @@ public class CarrinhoResource {
 	@Path("{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	public String busca(@PathParam("id") long id) {
-		Carrinho carrinho = new CarrinhoDAO().busca(id);
-		return carrinho.toXML();
+	public Carrinho busca(@PathParam("id") long id) {
+		return new CarrinhoDAO().busca(id);
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response adiciona(String conteudo) {
-		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+	public Response adiciona(Carrinho carrinho) {
 		new CarrinhoDAO().adiciona(carrinho);
 		URI uri = URI.create("/carrinhos/" + carrinho.getId());
 		return Response.created(uri).build();
@@ -51,9 +47,8 @@ public class CarrinhoResource {
 	@Path("{id}/produtos/{produtoId}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response atualiza(@PathParam("id") long id, @PathParam("produtoId") long produtoId, String conteudo) {
+	public Response atualiza(@PathParam("id") long id, @PathParam("produtoId") long produtoId, Produto produto) {
 		Carrinho carrinho = new CarrinhoDAO().busca(id);
-		Produto produto = (Produto) new XStream().fromXML(conteudo);
 		carrinho.troca(produto);
 		return Response.ok().build();
 	}
@@ -61,9 +56,8 @@ public class CarrinhoResource {
 	@Path("{id}/produtos/{produtoId}/quantidade")
 	@PUT
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response atualizaQtde(@PathParam("id") long id, @PathParam("produtoId") long produtoId, String conteudo) {
+	public Response atualizaQtde(@PathParam("id") long id, @PathParam("produtoId") long produtoId, Produto produto) {
 		Carrinho carrinho = new CarrinhoDAO().busca(id);
-		Produto produto = (Produto) new XStream().fromXML(conteudo);
 		carrinho.trocaQuantidade(produto);
 		return Response.ok().build();
 	}

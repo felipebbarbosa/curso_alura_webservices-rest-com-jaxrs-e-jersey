@@ -15,8 +15,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.xstream.XStream;
-
 import br.com.alura.loja.modelo.Carrinho;
 import br.com.alura.loja.modelo.Produto;
 import br.com.alura.loja.modelo.Projeto;
@@ -47,8 +45,7 @@ public class ClientTest {
 	@Test
 	public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
 		WebTarget target = startaCliente();
-		String conteudo = target.path("/carrinhos/1").request().get(String.class);
-		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+		Carrinho carrinho = target.path("/carrinhos/1").request().get(Carrinho.class);
 		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
 	}
 
@@ -57,8 +54,7 @@ public class ClientTest {
 	@Test
 	public void testaQueBuscarUmProjetoTrazOProjetoEsperado() {
 		WebTarget target = startaCliente();
-		String conteudo = target.path("/projetos/1").request().get(String.class);
-		Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+		Projeto projeto = target.path("/projetos/1").request().get(Projeto.class);
 		Assert.assertEquals(projeto.getNome(), "Minha loja");
 	}
 	
@@ -71,18 +67,15 @@ public class ClientTest {
 		carrinho.setRua("Rua Vergueiro");
 		carrinho.setCidade("Sao Paulo");
 		
-		String xml = carrinho.toXML();
-		
-		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
-		
+		Entity<Carrinho> entity = Entity.entity(carrinho, MediaType.APPLICATION_XML);
 		Response response = target.path("/carrinhos").request().post(entity);
 		
 		Assert.assertEquals(201, response.getStatus());
 		
 		String location = response.getHeaderString("Location");
-		String conteudo = client.target(location).request().get(String.class);
+		Carrinho carrinho2 = client.target(location).request().get(Carrinho.class);
 		
-		Assert.assertTrue(conteudo.contains("Tablet"));
+		Assert.assertEquals(carrinho2.getProdutos().get(0).getNome(), "Tablet");
 	}
 	
 	@Test
@@ -90,18 +83,17 @@ public class ClientTest {
 		WebTarget target = startaCliente();
 		
 		Projeto projeto = new Projeto(7l, "Teste", 2017);		
-		String xml = projeto.toXML();
 		
-		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+		Entity<Projeto> entity = Entity.entity(projeto, MediaType.APPLICATION_XML);
 		
 		Response response = target.path("/projetos").request().post(entity);
 		
 		Assert.assertEquals(201, response.getStatus());
 		
 		String location = response.getHeaderString("Location");
-		String conteudo = client.target(location).request().get(String.class);
+		Projeto projeto2 = client.target(location).request().get(Projeto.class);
 		
-		Assert.assertTrue(conteudo.contains("Teste"));
+		Assert.assertEquals(projeto2.getNome(), "Teste");
 	}
 
 }
