@@ -19,7 +19,7 @@
 
 ### 2. Testes endtoend com JAXRS e Grizzly
 - Criando um teste endtoend
-- @Before e @After para servidores
+- "@Before" e "@After" para servidores
 - Refatorando nosso código
 
 ### 3. Trabalhando com parâmetros
